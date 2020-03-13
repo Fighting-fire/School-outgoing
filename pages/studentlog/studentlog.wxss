@@ -1,0 +1,23 @@
+/* pages/studentlog/studentlog.wxss */
+#namecontainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#nametitle{
+
+}
+
+#teachercontainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#timecontainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+

@@ -1,0 +1,9 @@
+<!--pages/teacherlog/teacherlog.wxml-->
+<view class="page-section">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" password type="text" placeholder="请输入密码" bindinput="password"/>
+      </view>
+    </view>
+</view>
+<button id="sure" bindtap="sureTap" disabled="{{canlog}}">确认</button>

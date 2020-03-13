@@ -1,0 +1,19 @@
+<view class='map-wrapper' style='height:{{mapHeight}}px'>
+    <map id='myMap' class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{marksItem}}" enable-rotate='true' enable-3D='true' show-location='true' bindmarkertap='setUp' bindtap='outFocus'>
+    </map>
+</view>
+<view class='hint' style='height:{{hintHeight}}px' bindtap='changeListStatus'>
+  <!-- wx:if -->
+  <view wx:if='{{!isAboutShown}}'>
+    <image src="{{arrsrc}}" class="arr"></image>
+  </view>
+</view>
+<!-- <view class='hint' wx:if='{{!isAboutShown}}' style='height:{{operateHeight}}px' bindtap='changeListStatus'> -->
+<view>
+  <view>
+    <button class="marker" bindtap="addMakers">添加</button>
+    <button class="marker" bindtap="saveMakers">保存</button>
+    <button class="marker" bindtap="outMakers">退出</button>
+    <view>{{marksItem.name}}</view>
+  </view>
+</view>

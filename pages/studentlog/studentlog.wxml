@@ -1,0 +1,37 @@
+<!--pages/studentlog/studentlog.wxml-->
+<view id="namecontainer">
+    <view id="nametitle">姓名</view>
+    <input id="nameinput" type="text" value="{{name}}" placeholder="请输入您的姓名" />
+</view>
+<view id="teachercontainer">
+  <view id="teacher">任课老师</view>
+  <button id="chooseteacher" bindtap="chooseTap">请选择您的任课老师</button>
+</view>
+<view id="timecontainer">
+  <view id="timetitle">上课时间</view>
+  <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" id="timepickers">
+    <view id="timepicker">
+      {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+    </view>
+  </picker>
+</view>
+<button id="sure" bindtap="sureTap">确认</button>
+<!-- <view>
+
+  <picker-view class="picker" indicator-class="indicator" value="{{value}}" bindchange="bindChange">
+
+    <picker-view-column class="column">
+      <view wx:key="{{teachers}}">{{item}}</view>
+    </picker-view-column>
+
+    <picker-view-column class="column">
+      <view wx:key="{{days}}">{{item}}星期</view>
+    </picker-view-column>
+
+    <picker-view-column class="column">
+      <view wx:key="{{times}}">{{item}}时段</view>
+    </picker-view-column>
+    
+  </picker-view>
+
+</view> -->

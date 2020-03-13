@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/teacher/teacher",
+    "pages/index/index",
+    
+    "pages/map/map",   
+    "pages/teacherlog/teacherlog",
+    "pages/student/student",
+    "pages/studentlog/studentlog",
+    
+    "pages/logs/logs"
+  ],
+  "window": {
+    "navigationBarTitleText": "Demo"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "日志"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap70.json"
+}
