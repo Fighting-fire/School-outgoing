@@ -52,8 +52,6 @@ Page({
     arrsrc: '../../img/arrDown.png',
 
   },
-
-  
   powerDrawerOne: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
@@ -454,17 +452,40 @@ Page({
 
   nowMap:function(){
     console.log(mapid);
-    maps.doc(mapid).update({
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'update',
+      // 传给云函数的参数
       data: {
-        isNow: true,
       },
-      success(res) {
-        console.log("更新成功", res)
+      success: function (res) {
+        console.log(res)
+        maps.doc(mapid).update({
+          data: {
+            isNow: true,
+          },
+          success(res) {
+            console.log("更新成功", res)
+          },
+          fail(res) {
+            console.log("更新失败", res)
+          }
+        })
       },
-      fail(res) {
-        console.log("更新失败", res)
-      }
+      fail: console.error
     })
+   
+    // maps.doc(mapid).update({
+    //   data: {
+    //     isNow: true,
+    //   },
+    //   success(res) {
+    //     console.log("更新成功", res)
+    //   },
+    //   fail(res) {
+    //     console.log("更新失败", res)
+    //   }
+    // })
   },
 
   deleteMap:function(){
