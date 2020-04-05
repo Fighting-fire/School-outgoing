@@ -1,14 +1,14 @@
 {
   "pages": [
-    "pages/teacher/teacher",
     "pages/index/index",
-    
-    "pages/map/map",   
-    "pages/teacherlog/teacherlog",
+    "pages/logs/logs",
     "pages/student/student",
+    "pages/teacher/teacher",
     "pages/studentlog/studentlog",
     
-    "pages/logs/logs"
+    "pages/map/map",   
+    "pages/teacherlog/teacherlog"
+    
   ],
   "window": {
     "navigationBarTitleText": "Demo"
