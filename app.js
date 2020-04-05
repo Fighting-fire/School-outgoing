@@ -2,8 +2,11 @@
 App({
   onLaunch: function () {
     //接云开发
+   
     wx.cloud.init({
-      env:"outgoing-vftqo"
+      
+      env:"rainbow-c29ks"
+
     })
 
 
