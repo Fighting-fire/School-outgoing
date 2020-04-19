@@ -2,32 +2,51 @@
   "pages": [
     "pages/teacher/teacher",
     "pages/index/index",
-    "pages/logs/logs",
+    "pages/logs/logs",    
+    "pages/index/index",
     "pages/student/student",
+    "pages/teacherlog/teacherlog",
     "pages/studentlog/studentlog",
     "pages/map/map",   
     "pages/teacherlog/teacherlog"
     
   ],
-  "window": {
-    "navigationBarTitleText": "Demo"
-  },
   "tabBar": {
+    "custom": true,
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/logs/logs",
-        "text": "日志"
-      }
+"pagePath": "pages/teacher/teacher",
+"iconPath": "images/tabBar/广场1.png",
+"selectedIconPath": "images/tabBar/广场2.png",
+"text": "teacher"
+},
+{
+"pagePath": "pages/map/map",
+"iconPath": "images/tabBar/比赛1.png",
+"selectedIconPath": "images/tabBar/比赛2.png",
+"text": "map"
+}
     ]
   },
-  "networkTimeout": {
-    "request": 10000,
-    "downloadFile": 10000
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
+ "window": {
+  "navigationStyle": "custom",
+      "navigationBarBackgroundColor": "#F6F6F6",
+      "navigationBarTextStyle": "white"
+},
+"style": "v2",
+"usingComponents": {
+  "cu-custom": "/colorui/components/cu-custom"
+},
   "debug": true,
   "sitemapLocation": "sitemap70.json"
 }
+
