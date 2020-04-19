@@ -22,6 +22,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    upclass:"cuIcon-unfold",
+    downclass:"cuIcon-fold",
+    uptext: "显示隐藏按钮",
+    downtext: "隐藏下列按钮",
+    button:true,
+    imgUrl: '../../images/warm-bg.jpg',
+    temp: 15,
+    level:"选择地图",
+    listItem: ["难", "中", "易"],
+    show: false,
     // 总界面显示
     showNewStatus: true,
     // 新建界面动画显示
@@ -50,10 +60,41 @@ Page({
     //将地图中选中的marker对应的地点在list中显现
     toView: '',
     arrsrc: '../../img/arrDown.png',
-
+     mainActiveIndex: 0,
+    activeId: null,
+    toView: ''
+  },
+  showPopup() {
+    this.setData({ show: true });
+    wx.navigateTo({
+      url: "../pages/map/map"
+    })
+  },
+  selectlevel: function (e) {
+    let i = e.currentTarget.dataset.index
+    this.setData({
+      level: this.data.listItem[i]
+    })
+  },
+  onClose() {
+    this.setData({ show: false });
+  },
+  toView: function () {
+    this.setData({
+      toView: view,
+    })
+  },
+  onClickNav({ detail = {} }) {
+    this.setData({
+      mainActiveIndex: detail.index || 0
+    });
   },
 
-  
+  onClickItem({ detail = {} }) {
+    const activeId = this.data.activeId === detail.id ? null : detail.id;
+
+    this.setData({ activeId });
+  },
   powerDrawerOne: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
@@ -62,7 +103,10 @@ Page({
     // console.log(mapid);
     this.utilOne(currentStatu)
   },
-
+  onChange(event) {
+    const { picker, value, index } = event.detail;
+    picker.setColumnValues(1, citys[value[0]]);
+  },
   powerDrawerTwo: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
@@ -78,7 +122,20 @@ Page({
       showMapStatus:true,
     })
   },
-
+  onLoad: function (options) {
+    var that = this
+    // console.log(app.globalData)
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log('windowHeight: ' + res.windowHeight)
+        console.log('windowWidith: ' + res.windowWidth)
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      },
+    })
+  },
   /** 
      * 弹出动画
      */
@@ -294,11 +351,20 @@ Page({
     let that = this;
     //获取maps集合
     maps.get({
+ 
       success: function (res) {
-        // res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条
-        console.log(res.data)
+        var temp = [];
+        console.log(temp);
+        let j = 0;
+        for (j = 0; j < res.data.length; j++){
+          temp.push(res.data[j].name)
+        }
+    
+        console.log(temp)
+        // res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条\
         that.setData({
           mapsItem:res.data,
+          listItem:temp
         })
         // console.log(that.data.mapsItem)
       }
@@ -350,15 +416,12 @@ Page({
     }
     if (isListUnfold) {
       this.setData({
-        listHeight: 0,
-        mapHeight: windowHeight * 0.87,
-        arrsrc: '../../img/arrUp.png',
+        button:false,
       })
     } else {
       this.setData({
-        listHeight: windowHeight * 0.38,
-        mapHeight: windowHeight * 0.49,
-        arrsrc: '../../img/arrDown.png',
+        button:true,
+        listHeight: windowHeight * 0.38
       })
     }
     isListUnfold = !isListUnfold

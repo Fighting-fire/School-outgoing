@@ -1,13 +1,35 @@
 /*button*/  
-.btn {  
-  width: 80%;  
-  padding: 20rpx 0;  
-  border-radius: 10rpx;  
-  text-align: center;  
-  margin: 40rpx 10%;  
-  background: #000;  
-  color: #fff;  
-}  
+page{
+  font-family: 'SHSCNL';
+  font-size:45rpx;
+}
+ody {
+  font-family: 'montserrat', sans-serif;
+}
+.btn{
+  margin-bottom: 10%;
+}
+.map{
+  margin-top:10%;
+  margin-bottom: 10%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4s;
+}
+
+main {
+  min-height: 100vh;
+  padding: 25px;
+
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.75));
+}
   
 /*mask*/  
 .drawer_screen {  
@@ -100,3 +122,46 @@ radio{
 .col-1 {-webkit-box-flex:1;box-flex:1;}  
 .fl { float: left;}  
 .fr { float: right;}
+.hint {
+  z-index: 999;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  padding: 28rpx 0 28rpx 0;
+  color: #1c659c;
+  border-bottom: 1px solid #beb6b6;
+}
+.view-hint {
+  z-index: 999;
+  width: 100%;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  color: #1c659c;
+
+}
+.bgdc {
+  background-color: rgb(197, 225, 241) !important;
+}
+.cell-title {
+  color: #1c659c !important;
+  margin-left: 2rpx !important;
+  display: flex!important;
+  align-items: center!important;
+}
+.leveltag{
+  margin-top: 8%;
+  margin-bottom:8%;
+  color:black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
