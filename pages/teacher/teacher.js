@@ -36,9 +36,9 @@ Page({
     operateHeight: 0,
     //地图名字
     mapname: "none",
-    // 这里的lon、lat默认为中南大学南校区文法楼
-    longitude: 112.936395,
-    latitude: 28.160311,
+    // 这里的lon、lat默认为当前地址
+    longitude: 118.09797,
+    latitude: 36.95933,
     //地图缩放级别
     scale: 18,
     //存放map-marks信息
@@ -453,16 +453,34 @@ Page({
   },
 
   nowMap:function(){
-    console.log(mapid);
-    maps.doc(mapid).update({
+    console.log(this.data.mapsItem[0]._id);
+    let i = 0
+    let id
+    let length = this.data.mapsItem.length
+    for (i = 0; i < length; i++) {
+      id = this.data.mapsItem[i]._id
+      db.collection('maps').doc(id).update({
+        data: {
+          isNow: false
+        },
+        success(res) {
+          console.log("获取数据成功")
+        },
+        fail(res) {
+          console.log("获取数据失败")
+        }
+      })
+    }
+    wx.cloud.callFunction({
+      name: "changemapstate",
       data: {
-        isNow: true,
+        id: mapid
       },
       success(res) {
-        console.log("更新成功", res)
+        console.log("发送数据成功", res)
       },
       fail(res) {
-        console.log("更新失败", res)
+        console.log("发送数据失败", res)
       }
     })
   },

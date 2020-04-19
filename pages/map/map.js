@@ -25,9 +25,9 @@ Page({
     mapHeight: 0,
     hintHeight: 0,
     operateHeight: 0,
-    // 这里的lon、lat默认为中南大学南校区文法楼
-    longitude: 112.936395,
-    latitude: 28.160311,
+    // 这里的lon、lat默认为当前地址
+    longitude: 118.09797,
+    latitude: 36.95933,
     //地图缩放级别
     scale: 18,
     //存放list-item信息

@@ -2,13 +2,12 @@
   "pages": [
     "pages/teacher/teacher",
     "pages/index/index",
-    
-    "pages/map/map",   
-    "pages/teacherlog/teacherlog",
+    "pages/logs/logs",
     "pages/student/student",
     "pages/studentlog/studentlog",
+    "pages/map/map",   
+    "pages/teacherlog/teacherlog"
     
-    "pages/logs/logs"
   ],
   "window": {
     "navigationBarTitleText": "Demo"
