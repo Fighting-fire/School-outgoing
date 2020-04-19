@@ -1,11 +1,10 @@
 {
   "pages": [
+    "pages/teacher/teacher",
     "pages/index/index",
     "pages/logs/logs",
     "pages/student/student",
-    "pages/teacher/teacher",
     "pages/studentlog/studentlog",
-    
     "pages/map/map",   
     "pages/teacherlog/teacherlog"
     

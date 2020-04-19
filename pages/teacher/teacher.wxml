@@ -43,7 +43,7 @@
 <!-- 地图界面 -->
 <view class="map" wx:if="{{showMapStatus}}">
   <view class='map-wrapper' style='height:{{mapHeight}}px'>
-      <map id='myMap' class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{listItem}}" enable-rotate='true' enable-3D='true' show-location='true' bindmarkertap='setUp' bindtap='outFocus'>
+      <map id='myMap' class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{marksItem}}" enable-rotate='true' enable-3D='true' show-location='true' bindmarkertap='setUp' bindtap='outFocus'>
       </map>
   </view>
   <view class='hint' style='height:{{hintHeight}}px' bindtap='changeListStatus'>
