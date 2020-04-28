@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    teacherName:'请选择您的任课老师',
+    sname:'ooohhh',
     index: 0,
     multiArray: [['周日', '周一', '周二', '周三', '周四', '周五', '周六'], ['1-2', '3-4', '5-6', '7-8']],
     objectMultiArray: [
@@ -57,17 +59,31 @@ Page({
     ],
 
   },
-  chooseTap: function () {
+  studentNameInput:function(e){
+    console.log(this.data.sname);
+    this.setData({ 
+      sname: e.detail.value 
+    });
+    console.log(this.data.sname);
+  },
+  chooseTap: function (e) {
     //teacherchoose
+    var list=['梁莉', '李方坤', '陈志斌', '王晓艳', '张伟伟'];
+    var that = this;
     wx.showActionSheet({
-      itemList: ['梁莉', '李方坤', '陈志斌', '王晓艳', '张伟伟'],
+      itemList: list,
       success: function (res) {
         console.log(res.tapIndex);
+        that.setData({
+          teacherName: list[res.tapIndex]
+        });
       },
       fail: function (res) {
         console.log(res.errMsg)
       }
+      
     })
+    
   },
 
   bindMultiPickerChange: function (e) {
@@ -87,13 +103,28 @@ Page({
   },
 
   sureTap: function(){
-    let name = this.nameinput;
-    console.log(name);
-    if (name == undefined) {
+    if (this.data.sname == 'ooohhh') {
       wx: wx.showToast({
         title: '请输入姓名'
       })
       return false
+    }
+    else if (this.data.teacherName == '请选择您的任课老师'){
+      wx: wx.showToast({
+        title: '请选择教师'
+      })
+      return false
+    }
+    // else if(){
+    //   wx: wx.showToast({
+    //     title: '请选择时间'
+    //   })
+    // }
+    else{
+      console.log(this.data.sname);
+      wx.navigateTo({
+        url: '../student/student',
+      })
     }
   },
 

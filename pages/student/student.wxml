@@ -1,2 +1,20 @@
-<!--pages/student/student.wxml-->
-<text>pages/student/student.wxml</text>
+<!-- <view class="div">
+  <view  wx:for="{{ne}}" wx:for-index="key"  wx:for-item="value">
+    <view wx:if="{{value.isNow}}">
+      <view  wx:for="{{value.markers}}" wx:for-index="key"  wx:for-item="value">
+      {{key}} : {{value.markerlat}},{{value.markerlon}}
+      </view>
+    </view>
+  </view>
+</view> -->
+  <text class='marright'>{{hours}}:{{minute}}:{{second}}</text>
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markersItem}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;"></map>
+
+<view class="location" bindtap="locationViewTap">
+ <button>获取用户当前位置</button>
+</view>
+
+<view class="location" bindtap="RunningBegin">
+ <button>开始跑点</button>
+</view>
+

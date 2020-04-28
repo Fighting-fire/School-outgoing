@@ -1,28 +1,27 @@
 // pages/teacherlog/teacherlog.js
 Page({
+
+  password: function(evt){
+    let passwordV = evt.detail.value;
+
+    this.setData({
+      canlog:passwordV!=15367947796
+    })
+    console.log(this.data.canlog);
+  },
+
+  sureTap: function(){
+    wx.navigateTo({
+      url: '../teacher/teacher'
+    })
+  },
+
   /**
    * 页面的初始数据
    */
   data: {
     canlog:true
   },
-
-
-  password: function (evt) {
-    let passwordV = evt.detail.value;
-
-    this.setData({
-      canlog: passwordV != 15367947796
-    })
-    console.log(this.data.canlog);
-  },
-
-  sureTap: function () {
-    wx.navigateTo({
-      url: '../teacher/teacher'
-    })
-  },
-
 
   /**
    * 生命周期函数--监听页面加载

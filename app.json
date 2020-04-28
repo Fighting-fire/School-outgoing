@@ -1,15 +1,18 @@
 {
   "pages": [
     "pages/teacher/teacher",
-    "pages/index/index",
-    
     "pages/map/map",   
     "pages/teacherlog/teacherlog",
     "pages/student/student",
     "pages/studentlog/studentlog",
-    
+    "pages/index/index",
     "pages/logs/logs"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
   "window": {
     "navigationBarTitleText": "Demo"
   },

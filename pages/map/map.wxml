@@ -6,6 +6,7 @@
   <!-- wx:if -->
   <view wx:if='{{!isAboutShown}}'>
     <image src="{{arrsrc}}" class="arr"></image>
+    
   </view>
 </view>
 <!-- <view class='hint' wx:if='{{!isAboutShown}}' style='height:{{operateHeight}}px' bindtap='changeListStatus'> -->

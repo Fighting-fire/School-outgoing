@@ -17,13 +17,14 @@
 }
 
 .usermotto {
-  margin-top: 200px;
+  margin-top: 20px;
 }
 
 #idcontainer{
   display: flex;
   flex-direction: row;
   justify-content: center;
+  margin-top: 10px;
 }
 
 #identify {

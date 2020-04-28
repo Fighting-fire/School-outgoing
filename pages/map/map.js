@@ -67,8 +67,8 @@ Page({
           // setMapHeight
           menuHeight: windowHeight * 0.06,
           hintHeight: windowHeight * 0.07 - 1, //  for border-bottom: 1px
-          listHeight: windowHeight * 0.38,
-          mapHeight: windowHeight * 0.49,
+          listHeight: windowHeight * 0.245,
+          mapHeight: windowHeight * 0.755,
           arrsrc: '../../img/arrDown.png',
         })
       },
@@ -233,13 +233,13 @@ Page({
     if (isListUnfold) {
       this.setData({
         listHeight: 0,
-        mapHeight: windowHeight * 0.87,
+        mapHeight: windowHeight * 0.975,
         arrsrc: '../../img/arrUp.png',
       })
     } else {
       this.setData({
-        listHeight: windowHeight * 0.38,
-        mapHeight: windowHeight * 0.49,
+        listHeight: windowHeight * 0.245,
+        mapHeight: windowHeight * 0.755,
         arrsrc: '../../img/arrDown.png',
       })
     }

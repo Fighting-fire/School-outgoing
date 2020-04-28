@@ -52,8 +52,6 @@ Page({
     arrsrc: '../../img/arrDown.png',
 
   },
-
-  
   powerDrawerOne: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
@@ -397,7 +395,7 @@ Page({
           id: markerid,
           markerlat: res.latitude,
           markerlon: res.longitude,
-          iconPath: '../../img/location.png',
+          iconPath: "../../img/location.jpg",
           width: 27,
           height: 40,
           callout: {
