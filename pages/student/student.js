@@ -2,23 +2,15 @@
 
 Page({
   data: {
+    //当前需要跑的点的序号
+    count:1,
+    //stduentlog传递的学生姓名
+    sname:null,
     //定义一个数据，主要是放集合结果的
     ne: [],
-    
-    // 总界面显示
-    showNewStatus: true,
-    // 新建界面动画显示
-    showModalOneStatus: false,
-    // 管理界面动画显示
-    showModalTwoStatus: false,
-    // 地图界面显示
-    showMapStatus: false,
-    //地图、提示、列表高度
-    mapHeight: 0,
-    hintHeight: 0,
-    operateHeight: 0,
-    //地图名字
-    mapname: "none",
+    // 地图markers界面显示
+    showMarkersStatus: false,
+  
     // 这里的lon、lat默认为中南大学南校区文法楼 ，onload里有获得当前位置
     longitude: 112.936395,
     latitude: 28.160311,
@@ -38,6 +30,7 @@ Page({
     minute: '0' + 0,   // 分
     second: '0' + 0    // 秒
   },
+
   regionchange(e) {
     console.log(e.type)
   },
@@ -95,8 +88,23 @@ Page({
       }
     }, 1000)
   },
-  onLoad: function () {
+  stopInterval: function (){
+    const that = this
+    var second = that.data.second
+    var minute = that.data.minute
+    var hours = that.data.hours
+    that.setData({
+      second: second,
+      minute: minute,
+      hours: hours
+    })
+  },
+  onLoad: function (options) {
     var _this = this;
+    //获得studentlog传递数据
+    _this.setData({
+      sname: options.sname,
+    })
     //1、引用数据库
     const db = wx.cloud.database({
       //这个是环境ID不是环境名称
@@ -106,16 +114,35 @@ Page({
     db.collection('maps').get({
       //如果查询成功的话
       success: res => {
-
         //这一步很重要，给ne赋值，没有这一步的话，前台就不会显示值
         this.setData({
           ne: res.data
         })
-        
+        for (var index in this.data.ne) {
+          if (this.data.ne[index].isNow == true) {
+            this.setData({
+              marksItem: this.data.ne[index].markers
+            })
+          }
+        }
+        this.setData({
+         /// markers:marksItem,
+          showMarkersStatus: true
+        })
+        //随机打乱顺序
+        console.log(this.data.marksItem.length)
+        for (var index = 0; index < this.data.marksItem.length; index++) {
+          var ran = Math.floor(Math.random() * this.data.marksItem.length);
+          console.log('ran')
+          this.setData({
+            'marksItem[ran].content': index+1,
+            'marksItem[index].content': ran,//数据路径key必须带''号
+          })
+        }
       }
     })
-    
-    
+
+   
     //获取当前位置
     var that = this;
     wx.getLocation({
@@ -123,7 +150,6 @@ Page({
       success: function (res) {
         var latitude = res.latitude;
         var longitude = res.longitude;
-        //console.log(res.latitude);
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
@@ -147,27 +173,27 @@ Page({
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
-          markers: [{
-            latitude: res.latitude,
-            longitude: res.longitude
-          }]
+
         })
+        //打点后的变化
+        for(var index in that.data.marksItem){
+          if (longitude == that.data.marksItem[index].longitude){
+            if (latitude == that.data.marksItem[index].latitude){
+              //发生变化  比如把点变绿。。。
+              console.log("0124")
+            }
+          }
+        }
+        //判断是否打点完毕
+        //if(){
+        //  stopInterval();
+        //}
       }
     })
   },
   RunningBegin: function (){
-    console.log(this.data.ne.length)
-    
-    for (var index in this.data.ne){
-      console.log(this.data.ne[index].isNow)
-      if (this.data.ne[index].isNow==true){
-        this.setData({
-          marksItem: this.data.ne[index].markers
-        })
-      }
-    }
     this.setInterval();
-    console.log("12")
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

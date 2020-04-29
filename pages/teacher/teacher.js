@@ -393,13 +393,13 @@ Page({
       success: function (res) {
         marker = {
           id: markerid,
-          markerlat: res.latitude,
-          markerlon: res.longitude,
+          latitude: res.latitude,
+          longitude: res.longitude,
           iconPath: "../../img/location.jpg",
           width: 27,
           height: 40,
           callout: {
-            content: ''
+            content: markerid
           }
         }
         markerlist.push(marker)

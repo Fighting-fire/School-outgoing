@@ -123,7 +123,7 @@ Page({
     else{
       console.log(this.data.sname);
       wx.navigateTo({
-        url: '../student/student',
+        url: '../student/student?sname='+this.data.sname,
       })
     }
   },
