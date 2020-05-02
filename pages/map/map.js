@@ -6,8 +6,13 @@ let windowHeight = 0;
 let isListUnfold = true;
 //调试时打印信息、上线时设为false
 let consoleUtil = require('../../utils/util.js');
+//储存地图信息
+let markerlist = [];
+let marker = {};
 // 存储打点信息
 let markerid = 0;
+let mapid = 0;
+let id = 100;
 
 
 // 获取数据库引用
@@ -141,10 +146,25 @@ Page({
     })
   },
   
-  
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   this.getTabBar().setData({
+    //     selected: 1
+    //   })
+    // }
+    consoleUtil.log('onShow--------------------->');
+    // this.markoperation()
+  },
+
   onReady: function () {
     consoleUtil.log('onReady--------------------->');
     let that = this;
+    that.getWindowHeight();
     that.mapCtx = wx.createMapContext('myMap');
     that.includePoints();
     //查询相关
@@ -153,33 +173,32 @@ Page({
     }).get({
       success: function (res) {
         console.log("success...")
-        console.log(res.data)
+        // console.log(res.data)
+        mapid = res.data[0]._id
+        markerid = res.data[0].markers.length
+        // console.log(markerid)
+        markerlist = res.data[0].markers
         that.setData({
-          marksItem: res.data,
+          marksItem: markerlist,
         })
-        // markerid= marksItem.length
         console.log(that.data.marksItem)
       },
       fail: function (res) {
         console.log("fail...")
       }
     })
-
     that.includePoints()
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      this.getTabBar().setData({
-        selected: 1
-      })
-    }
-    consoleUtil.log('onShow--------------------->');
-    this.getWindowHeight();
+  
+  markoperation:function(){
+    let that = this;
+    that.setData({
+      latitude: res.latitude,
+      longitude: res.longitude,
+      scale: 16,
+      marksItem: markerlist,
+    })
+    console.log(that.data.marksItem)
   },
 
   /**
@@ -229,6 +248,62 @@ Page({
 
   },
 
+  powerDrawer: function (evt) {
+    let currentStatu = evt.currentTarget.dataset.statu;
+    id = evt.markerId;
+    // console.log(id)
+    this.util(currentStatu)
+  },
+
+  util: function (currentStatu) {
+    /* 动画部分 */
+    // 第1步：创建动画实例   
+    let animation = wx.createAnimation({
+      duration: 200,  //动画时长  
+      timingFunction: "linear", //线性  
+      delay: 0  //0则不延迟  
+    });
+
+    // 第2步：这个动画实例赋给当前的动画实例  
+    this.animation = animation;
+
+    // 第3步：执行第一组动画  
+    animation.opacity(0).rotateX(-100).step();
+
+    // 第4步：导出动画对象赋给数据对象储存  
+    this.setData({
+      animationData: animation.export()
+    })
+
+    // 第5步：设置定时器到指定时候后，执行第二组动画  
+    setTimeout(function () {
+      // 执行第二组动画  
+      animation.opacity(1).rotateX(0).step();
+      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象  
+      this.setData({
+        animationData: animation
+      })
+
+      //关闭  
+      if (currentStatu == "close") {
+        this.setData(
+          {
+            showModalStatus: false
+          }
+        );
+      }
+    }.bind(this), 200)
+
+    // 显示  
+    if (currentStatu == "open") {
+      this.setData(
+        {
+          showModalStatus: true
+        }
+      );
+    }
+  },
+
   /**
    * 改变列表的状态
    */
@@ -261,56 +336,94 @@ Page({
     }
   },
 
-
-  // addMakers: function () {
-  //   let that = this;
-  //   wx.getLocation({
-  //     type: 'gcj02',
-  //     success: function (res) {
-  //       marker = {
-  //         id: markerid,
-  //         markerlat: res.latitude,
-  //         markerlon: res.longitude,
-  //         iconPath: '../../img/location.png',
-  //         width: 27,
-  //         height: 40,
-  //         callout: {
-  //           content: ''
-  //         }
-  //       }
-  //       markerlist = markerlist.concat(that.data.marksItem)
-  //       markerlist.push(marker)
-  //       console.log(markerlist)
-  //       that.setData({
-  //         latitude: res.latitude,
-  //         longitude: res.longitude,
-  //         scale: 16,
-  //         marksItem:markerlist,
-  //       })
-  //     },
-  //   })
-  // },
-
   /** 
-     * 将地图信息提交至数据库
+     * 添加点
      */
-  saveMakers: function () {
-    maps.add({
-      data: {
-        name: this.data.mapname,
-        markers: this.data.marksItem,
-        isNow: false,
+  addMarkers: function () {
+    let that = this;
+    markerid++;
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        marker = {
+          id: markerid,
+          latitude: res.latitude,
+          longitude: res.longitude,
+          iconPath: '../../img/location.png',
+          width: 27,
+          height: 40,
+          isend:false,
+          callout: {
+            content: ''
+          }
+        }
+        markerlist.push(marker)
+        console.log(markerlist)
+        that.setData({
+          latitude: res.latitude,
+          longitude: res.longitude,
+          scale: 16,
+          marksItem: markerlist,
+        })
       },
-      success(res) {
-        console.log("提交成功", res)
-      },
-      fail(res) {
-        console.log("提交失败", res)
-      }
     })
   },
 
-  outMakers: function () {
+  /** 
+     * 保存点
+     */
+  saveMarkers: function () {
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+    })
+  },
+
+ /** 
+     * 删除点
+     */
+  deleteMarkers:function(evt){
+    console.log(markerlist)
+    for (let i = 0; i < markerlist.length; i++) {
+      if (markerlist[i].id == id){
+        markerlist.splice(i, 1);
+      }
+    }
+    console.log(markerlist)
+    console.log('删除成功')
+  },
+
+  /** 
+      * 设为集合点
+      */
+  endMarkers: function (evt) {
+    for (let i = 0; i < markerlist.length; i++) {
+      markerlist[i].isend = false;
+      if (markerlist[i].id == id) {
+        markerlist[i].isend = true;
+      }
+    }
+    console.log(markerlist)
+    console.log('设置成功')
+  },
+
+
+  /** 
+     * 退出并将地图信息提交至数据库
+     */
+  outMarkers: function () {
+    let that = this
+    maps.doc(mapid).update({
+      data: {
+        markers: that.data.marksItem,
+      },
+      success(res) {
+        console.log("更新成功", res)
+      },
+      fail(res) {
+        console.log("更新失败", res)
+      }
+    })
     wx.navigateTo({
       url: '../teacher/teacher'
     })

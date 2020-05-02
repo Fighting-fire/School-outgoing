@@ -22,14 +22,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    upclass:"cuIcon-unfold",
-    downclass:"cuIcon-fold",
+    upclass: "cuIcon-unfold",
+    downclass: "cuIcon-fold",
     uptext: "显示隐藏按钮",
     downtext: "隐藏下列按钮",
-    button:true,
+    button: true,
     imgUrl: '../../images/warm-bg.jpg',
     temp: 15,
-    level:"选择地图",
+    level: "选择地图",
     listItem: ["难", "中", "易"],
     show: false,
     // 总界面显示
@@ -46,9 +46,9 @@ Page({
     operateHeight: 0,
     //地图名字
     mapname: "none",
-    // 这里的lon、lat默认为当前地址
-    longitude: 118.09797,
-    latitude: 36.95933,
+    // 这里的lon、lat默认为中南大学南校区文法楼
+    longitude: 112.936395,
+    latitude: 28.160311,
     //地图缩放级别
     scale: 18,
     //存放map-marks信息
@@ -60,22 +60,25 @@ Page({
     //将地图中选中的marker对应的地点在list中显现
     toView: '',
     arrsrc: '../../img/arrDown.png',
-     mainActiveIndex: 0,
+    mainActiveIndex: 0,
     activeId: null,
     toView: ''
   },
+
   showPopup() {
     this.setData({ show: true });
-    wx.navigateTo({
-      url: "../pages/map/map"
-    })
+    // wx.navigateTo({
+    //   url: "../map/map"
+    // })
   },
-  selectlevel: function (e) {
-    let i = e.currentTarget.dataset.index
-    this.setData({
-      level: this.data.listItem[i]
-    })
-  },
+
+  // selectlevel: function (e) {
+  //   let i = e.currentTarget.dataset.index
+  //   this.setData({
+  //     level: this.data.listItem[i]
+  //   })
+  // },
+  
   onClose() {
     this.setData({ show: false });
   },
@@ -95,18 +98,25 @@ Page({
 
     this.setData({ activeId });
   },
+
   powerDrawerOne: function (evt) {
     //获取该对象的statu
+    let i = evt.currentTarget.dataset.index
+    this.setData({
+      level: this.data.listItem[i]
+    })
     let currentStatu = evt.currentTarget.dataset.statu;
     mapid = evt.currentTarget.dataset.id;
     // console.log(currentStatu);
     // console.log(mapid);
     this.utilOne(currentStatu)
   },
+
   onChange(event) {
     const { picker, value, index } = event.detail;
     picker.setColumnValues(1, citys[value[0]]);
   },
+
   powerDrawerTwo: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
@@ -118,10 +128,12 @@ Page({
      */
   toMap: function () {
     this.setData({
+      showModalOneStatus:false,
       showNewStatus: false,
-      showMapStatus:true,
+      showMapStatus: true,
     })
   },
+
   onLoad: function (options) {
     var that = this
     // console.log(app.globalData)
@@ -347,24 +359,23 @@ Page({
   onShow: function () {
     consoleUtil.log('onShow--------------------->');
     this.getWindowHeight();
-    markerid = 1;
     let that = this;
     //获取maps集合
     maps.get({
- 
+
       success: function (res) {
         var temp = [];
         console.log(temp);
         let j = 0;
-        for (j = 0; j < res.data.length; j++){
+        for (j = 0; j < res.data.length; j++) {
           temp.push(res.data[j].name)
         }
-    
+
         console.log(temp)
         // res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条\
         that.setData({
-          mapsItem:res.data,
-          listItem:temp
+          mapsItem: res.data,
+          listItem: temp
         })
         // console.log(that.data.mapsItem)
       }
@@ -416,11 +427,11 @@ Page({
     }
     if (isListUnfold) {
       this.setData({
-        button:false,
+        button: false,
       })
     } else {
       this.setData({
-        button:true,
+        button: true,
         listHeight: windowHeight * 0.38
       })
     }
@@ -436,10 +447,10 @@ Page({
     }
   },
 
-/**
-   * 获得mapname
-   */
-  mapName: function(evt){
+  /**
+     * 获得mapname
+     */
+  mapName: function (evt) {
     let name = evt.detail.value;
     this.setData({
       mapname: name
@@ -447,9 +458,9 @@ Page({
     // console.log(this.data.mapname);
   },
 
-/**
-   * 添加markers
-   */
+  /**
+     * 添加markers
+     */
   addMakers: function () {
     markerid++;
     let that = this;
@@ -458,16 +469,18 @@ Page({
       success: function (res) {
         marker = {
           id: markerid,
-          markerlat: res.latitude,
-          markerlon: res.longitude,
+          latitude: res.latitude,
+          longitude: res.longitude,
           iconPath: '../../img/location.png',
           width: 27,
           height: 40,
+          isend:false,
           callout: {
             content: ''
           }
         }
         markerlist.push(marker)
+        console.log(markerlist)
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
@@ -478,44 +491,51 @@ Page({
     })
   },
 
- /** 
-     * 将地图信息提交至数据库
-     */
-  saveMakers:function(){
-    maps.add({
-      data:{
-        name:this.data.mapname,
-        markers: this.data.marksItem,
-        isNow:false,
-      },
-      success(res){
-        console.log("提交成功",res)
-      },
-      fail(res){
-        console.log("提交失败",res)
-      }
+  /** 
+      * 保存
+      */
+  saveMakers: function () {
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
     })
   },
 
   /** 
-     * 显示newview
+     * 显示newview并将地图信息提交至数据库
      */
   outMakers: function () {
+    maps.add({
+      data: {
+        name: this.data.mapname,
+        markers: this.data.marksItem,
+        isNow: false,
+      },
+      success(res) {
+        console.log("提交成功", res)
+      },
+      fail(res) {
+        console.log("提交失败", res)
+      }
+    })
     this.setData({
       showNewStatus: true,
       showMapStatus: false,
-      showModalOneStatus:false
+      showModalOneStatus: false,
+      showModalTwoStatus:false,
     })
+    this.onShow()
   },
 
-  changeMap:function(evt){
-    // console.log(mapid);
+  changeMap: function (evt) {
+    console.log(mapid);
     wx.navigateTo({
       url: '../map/map?mapid=' + mapid
     })
+    console.log("success");
   },
 
-  nowMap:function(){
+  nowMap: function () {
     console.log(this.data.mapsItem[0]._id);
     let i = 0
     let id
@@ -548,7 +568,8 @@ Page({
     })
   },
 
-  deleteMap:function(){
+
+  deleteMap: function () {
     maps.doc(mapid).remove({
       success(res) {
         console.log("删除成功", res)
@@ -557,6 +578,6 @@ Page({
         console.log("删除失败", res)
       }
     })
-    
+
   },
 })

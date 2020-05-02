@@ -148,6 +148,7 @@ radio{
   color: #1c659c;
 
 }
+
 .bgdc {
   background-color: rgb(197, 225, 241) !important;
 }

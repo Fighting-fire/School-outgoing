@@ -1,22 +1,18 @@
 <view id="app" class="bg-purple padding radius text-center shadow-blur" style=" height: {{ windowHeight }}px">
-           <view wx:if='{{!showMapStatus}}' class="btn cu-btn block line-white lg" bindtap="showPopup"  >{{level}}</view>  
-          <van-popup
-          show="{{ show }}"
-          position="bottom"
-          custom-style="height: 40%;"
-          bind:close="onClose"
-          round
-          >
-           <scroll-view style="max-height: {{ windowHeight * 0.4 }}px" scroll-y="true"        scroll-with-animation scroll-into-view="{{ toView }}">
-             <van-row  wx:for="{{ mapsItem}}" wx:key="index" >
-            <van-cell  custom-class="{{ item.id == toView ? 'bgdc' : '' }}" size="large"  clickable="true" data-index="{{ index }}" bindtap='selectlevel'>
+      <view wx:if='{{!showMapStatus}}' class="btn cu-btn block line-white lg" bindtap="showPopup"  >{{level}}</view>  
+    <van-popup show="{{ show }}" position="bottom" custom-style="height: 40%;" bind:close="onClose" round>
+      <scroll-view style="max-height: {{ windowHeight * 0.4 }}px" scroll-y="true"        scroll-with-animation scroll-into-view="{{ toView }}">
+        <van-row  wx:for="{{ mapsItem }}" wx:key="index" >
+          <van-cell  custom-class="{{ item.id == toView ? 'bgdc' : '' }}" size="large"  clickable="true" data-index="{{ index }}" bindtap="powerDrawerOne" data-statu="open" data-id="{{item._id}}">
           <view slot="title" class="cell-title">
-          <view class='view-hint'>{{item.name}}</view>
+            <view class='view-hint'>{{item.name}}</view>
           </view>
-            </van-cell>
-      </van-row>
-    </scroll-view>
-          </van-popup>
+          </van-cell>
+        </van-row>
+      </scroll-view>
+    </van-popup>
+
+          
 <view class="new" wx:if="{{showNewStatus}}">
   <view class="cu-btn block line-white lg" bindtap="powerDrawerTwo" data-statu="open">新建地图</view>  
     
