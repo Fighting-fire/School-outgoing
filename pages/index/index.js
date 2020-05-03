@@ -4,10 +4,15 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    AvatarUrl: 'https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/avademo.png?sign=032b26657afd1c64dd19a5798feab256&t=1588086418',
+    windowHeight: 0,
+    windowWidth: 0,
+    error:"无法获取您的头像信息",
+    motto: '欢迎使用智行合一',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    csu:"https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/u%3D265958750%2C3195826936%26fm%3D26%26gp%3D0%5B1%5D.jpg?sign=76b50d6648d7902d38072f25afa1979a&t=1588487951"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -38,8 +43,27 @@ Page({
       }
     })
   },
-  
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  },
   onLoad: function () {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (ress) {
+        console.log('windowHeight: ' + ress.windowHeight)
+        console.log('windowWidith: ' + ress.windowWidth)
+        that.setData({
+          windowHeight: ress.windowHeight,
+          windowWidth: ress.windowWidth,
+        })
+      },
+    })
+    this.getUserInfo;
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -67,12 +91,5 @@ Page({
       })
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
+
 })

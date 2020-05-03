@@ -1,28 +1,7 @@
 /**app.wxss**/
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
-} 
-.userinfo, .uploader, .tunnel {
-  margin-top: 40rpx;
-  height: 140rpx;
-  width: 100%;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-left: none;
-  border-right: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  transition: all 300ms ease;
-}
+
 @font-face{
   font-family: 'SHSCNL';
   src: url("https://656e-energycsu-x8fn6-1301628535.tcb.qcloud.la/%E5%AD%97%E4%BD%93/%E6%80%9D%E6%BA%90%E9%BB%91%E4%BD%93SourceHanSansCN-Light.otf?sign=d088aed1321bc67b215add56d5558ade&t=1585140636");

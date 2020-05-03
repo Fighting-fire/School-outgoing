@@ -4,7 +4,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    canlog:true
+    canlog:true,
+    windowHeight: 0,
+    windowWidth: 0,
   },
 
 
@@ -18,6 +20,7 @@ Page({
   },
 
   sureTap: function () {
+    console.log("s")
     wx.navigateTo({
       url: '../teacher/teacher'
     })
@@ -28,6 +31,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log('windowHeight: ' + res.windowHeight)
+        console.log('windowWidith: ' + res.windowWidth)
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth
+        })
+      },
+    })
 
   },
 

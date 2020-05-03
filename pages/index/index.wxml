@@ -1,17 +1,18 @@
 <!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-  <view id="idcontainer">
-    <view id="identify">身份</view>
-    <button id="chooseid" bindtap="chooseTap">请选择您的身份</button>
-  </view>
+
+<view id="top" style="height:{{ windowHeight*0.4}}px;width:{{ windowWidth}}px;"class="bg-purple padding radius text-center shadow-blur">
+  <image bindtap="bindViewTap"  src="{{!hasUserInfo?csu:userInfo.avatarUrl}}" mode="widthFix"></image>
+      <text id="alterinfo">{{!hasUserInfo?error:userInfo.nickName}}</text>
+
+
+ 
 </view>
+<view class="cu-bar bg-white wel">
+  <view class="action center sub-title">
+    <text class="text-xl text-bold text-purple">{{motto}}</text>
+    <text class="text-ABC text-purple">welcome</text>  
+  </view>  
+</view>
+     <button class="cu-btn block line-purple lg bt btn wel" bindtap="chooseTap">请选择您的身份</button>
+
+

@@ -1,4 +1,5 @@
 // pages/about/about.js
+var QQMapWX = require('../../tx/qqmap-wx-jssdk.js');
 
 //用于获取屏幕信息 适配屏幕大小
 let windowHeight = 0;
@@ -13,7 +14,8 @@ let marker = {};
 let markerid = 0;
 let mapid = 0;
 let id = 100;
-
+let plan1=[];
+let plan2= [];
 
 // 获取数据库引用
 const db = wx.cloud.database();
@@ -24,6 +26,7 @@ Page({
 
   data: {
     //状态栏和标题栏的高度
+    show1: false,
     // statusBarHeight: 0,
     // titleBarHeight: 0,
     //地图、提示、列表高度
@@ -48,13 +51,19 @@ Page({
     id: '',
     //用于打开关于我们界面
     isAboutShown: false,
+    plan0:[],
+    plan1:[],
+    plan2:[],
   },
 
   /** 
     * 获取用户设备屏幕高度
     */
   getWindowHeight: function () {
-    var that = this
+    var that = this;
+    var qqmapsdk = new QQMapWX({
+      key: 'GC3BZ-3M7LW-HPLR7-ONTBQ-6HOJJ-Q5BUO' // 必填
+    });
     wx.getSystemInfo({
       success: function (res) {
         var statusBarHeight = res.statusBarHeight;
@@ -67,6 +76,7 @@ Page({
         }
         windowHeight = res.windowHeight - statusBarHeight - titleBarHeight
         that.setData({
+          windowHeight: windowHeight,
           statusBarHeight: statusBarHeight,
           titleBarHeight: titleBarHeight,
           // setMapHeight
@@ -117,7 +127,15 @@ Page({
       }
     })
   },
-
+  showPopup1() {
+    this.setData({ show1: true });
+    // wx.navigateTo({
+    //   url: "../map/map"
+    // })
+  },
+  onClose1() {
+    this.setData({ show1: false });
+  },
   /**
      * 请求用户所在地理位置、并移动到地图中心
      */
@@ -354,7 +372,7 @@ Page({
           height: 40,
           isend:false,
           callout: {
-            content: ''
+            content: markerid
           }
         }
         markerlist.push(marker)
@@ -389,6 +407,17 @@ Page({
         markerlist.splice(i, 1);
       }
     }
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+      showModalStatus: false,
+    })
+    db.collection('route').where({
+      id:mapid
+    }).remove();
+    db.collection('route').where({
+      id: mapid
+    }).remove();
     console.log(markerlist)
     console.log('删除成功')
   },
@@ -397,12 +426,51 @@ Page({
       * 设为集合点
       */
   endMarkers: function (evt) {
+    let that = this;
     for (let i = 0; i < markerlist.length; i++) {
       markerlist[i].isend = false;
       if (markerlist[i].id == id) {
         markerlist[i].isend = true;
+        let exchange = markerlist[i];
+        markerlist[i] = markerlist[markerlist.length-1];
+        markerlist[markerlist.length - 1]=exchange;
+        //保证最后一个点为集合点（是不是可以把isend给去了呢？）
       }
     }
+    //生成路线规划
+    let point = markerlist.length;
+    for (let i = 0; i < markerlist.length-1; i++)
+    {
+      plan1[i] = markerlist[i+1]
+    } 
+    plan1[markerlist.length - 2] = markerlist[0]
+    plan1[markerlist.length - 1] = markerlist[markerlist.length - 1]
+    for (let i = 1; i < markerlist.length - 2; i++)
+    {
+      plan2[i] = markerlist[i + 1]
+    } 
+    plan2[0] = markerlist[0]
+    plan2[markerlist.length - 2] = markerlist[1]
+    plan2[markerlist.length - 1] = markerlist[markerlist.length - 1]
+    db.collection('route').add({
+      data:{
+      marker:plan1,
+      id:mapid,
+      name:"plan1"
+      }
+    })
+    db.collection('route').add({
+      data: {
+        marker: plan2,
+        id: mapid,
+        name: "plan2"
+      }
+    })
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+      showModalStatus: false,
+    })
     console.log(markerlist)
     console.log('设置成功')
   },
@@ -424,6 +492,9 @@ Page({
         console.log("更新失败", res)
       }
     })
+
+
+    
     wx.navigateTo({
       url: '../teacher/teacher'
     })

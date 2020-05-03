@@ -1,21 +1,89 @@
-<!--pages/studentlog/studentlog.wxml-->
-<view id="namecontainer">
-    <view id="nametitle">姓名</view>
-    <input id="nameinput" type="text" value="{{name}}" placeholder="请输入您的姓名" />
+
+<!--pages/release/release.wxml-->
+<view  class="bg-purple padding radius text-center shadow-blur" style="width:{{ windowWidth}}px;height:{{ windowHeight*0.5}}px;">
+<view class="faqiyundong"  >
+
+<image class="fqyd_img" src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/yun.png?sign=73aa4674b5335c8c43b08db1da97cc37&t=1588085410" style="width:{{ windowWidth*0.1}}px;height:{{ windowHeight*0.07}}px;">
+</image>
+<image class="fqyd_img" src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/dong.png?sign=ff2f34c59139ec327a76541f91d1b9b9&t=1588085388" style="width:{{ windowWidth*0.1}}px;height:{{ windowHeight*0.07}}px;">
+</image>
+
+
 </view>
-<view id="teachercontainer">
-  <view id="teacher">任课老师</view>
-  <button id="chooseteacher" bindtap="chooseTap">请选择您的任课老师</button>
+ <image class="fqyd_xian"src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/xian.png?sign=b35588c58a041d866fbe8cda91682517&t=1588086110" style="width:{{ windowWidth}}px;height:{{ windowHeight*0.004}}px;">
+</image>
+
 </view>
-<view id="timecontainer">
+
+<view > <!-- 整体白色背景 -->
+  
+ 
+</view>
+
+<view style="width:{{ windowWidth*0.72}}px;" class="sportslist">
+  
+  
+ 
+  <view class="InputView">
+
+   <view  style="width:{{ windowWidth*0.72}}px;" class="ActionName">上课时间段</view>
+  <view   class="leveltag" style="width:{{ windowWidth*0.20}}px;height:{{ windowHeight*0.035}}px;" >
+          <view bindtap="choose_time" class = "choose "style="width:100%;">{{timeChose[0].time}}\n{{timeChose[0].status}}</view>
+           <van-popup
+          show="{{ time }}"
+          position="bottom"
+          custom-style="height: 40%;"
+          bind:close="onClose"
+          round
+          >
+         <view class='containt'>
+  <scroll-view class="scroll-view_H" scroll-x>
+    <view class='list' style='width:{{ width }}rpx'>
+      <view bindtap="select" wx:for="{{ calendar }}" wx:for-item="item" wx:for-index="index" data-index="{{ index }}" class='listItem {{index==currentIndex? "current":""}}'>
+        <text class='name'>{{ item.week }}</text>
+        <text class='date'>{{ item.date }}</text>
+      </view>
+    </view>
+  </scroll-view>
+  <view class='time'>
+    <view wx:for="{{ timeArr }}" wx:for-item="timeItem" wx:for-index="timeIndex" data-Tindex="{{ timeIndex }}" bindtap='selectTime' class='listItem {{ currentTime==timeIndex? "current":"" }}'>
+      <text>{{ timeItem.time }}</text>
+      <text>{{ timeItem.status }}</text>
+    </view>
+  </view>
+  <!-- <view class='operate'>
+   <button class='del'>删除</button>
+   <button class='save'>保存</button>
+  </view> -->
+</view>
+   </van-popup>
+    </view>
+  </view>
+    <view class="InputView">
+
+   <text style="width:{{ windowWidth*0.72}}px;" class="ActionName" >老师</text>
+     
+   <view  class="leveltag" style="width:{{ windowWidth*0.20}}px;height:{{ windowHeight*0.035}}px;" >
+          
+  <view bindtap="chooseTap">{{teacherName}}</view>
+</view>
+     </view>
+    <view class="InputView">
+    <text style="width:{{ windowWidth*0.72}}px;" class="ActionName">您的姓名</text>
+    <input class="weui-input InputField" id="nameinput" type="text" value="{{name}}" placeholder="请输入您的姓名"   bindinput="studentNameInput"/>
+    </view>
+  </view>
+
+<!-- <view id="timecontainer">
   <view id="timetitle">上课时间</view>
   <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" id="timepickers">
     <view id="timepicker">
-      {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+      ,,,{{multiArray[0][multiIndex[0]]}} {{multiArray[1][multiIndex[1]]}}
     </view>
   </picker>
-</view>
-<button id="sure" bindtap="sureTap">确认</button>
+</view> -->
+<view class="cu-btn block line-purple lg bt" bindtap="sureTap" style="height:{{ windowHeight*0.05}}px;">确认</view>
+
 <!-- <view>
 
   <picker-view class="picker" indicator-class="indicator" value="{{value}}" bindchange="bindChange">
@@ -34,4 +102,4 @@
     
   </picker-view>
 
-</view> -->
+</view>

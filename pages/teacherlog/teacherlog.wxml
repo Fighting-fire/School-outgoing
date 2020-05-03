@@ -1,9 +1,24 @@
 <!--pages/teacherlog/teacherlog.wxml-->
-<view class="page-section">
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell weui-cell_input">
-        <input class="weui-input" password type="text" placeholder="请输入密码" bindinput="password"/>
-      </view>
-    </view>
+<view  class="bg-purple padding radius text-center shadow-blur" style="width:{{ windowWidth}}px;height:{{ windowHeight*0.3}}px;">
+<view class="faqiyundong"  >
+
+<image class="fqyd_img" src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/yun.png?sign=73aa4674b5335c8c43b08db1da97cc37&t=1588085410" style="width:{{ windowWidth*0.1}}px;height:{{ windowHeight*0.07}}px;">
+</image>
+<image class="fqyd_img" src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/dong.png?sign=ff2f34c59139ec327a76541f91d1b9b9&t=1588085388" style="width:{{ windowWidth*0.1}}px;height:{{ windowHeight*0.07}}px;">
+</image>
+
+
 </view>
-<button id="sure" bindtap="sureTap" disabled="{{canlog}}">确认</button>
+ <image class="fqyd_xian"src="https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/xian.png?sign=b35588c58a041d866fbe8cda91682517&t=1588086110" style="width:{{ windowWidth}}px;height:{{ windowHeight*0.004}}px;">
+</image>
+</view>
+
+<input class="input2" ></input>
+
+<view style="width:{{ windowWidth*0.72}}px;" class="sportslist">
+  <view class="InputView">
+    <text style="width:{{ windowWidth*0.72}}px;" class="ActionName">密码</text>
+    <input class="weui-input InputField" password="true" id="nameinput"placeholder="请输入密码"  value="{{name}}" bindinput="password"  />
+    </view>
+    </view>
+<button id="sure" class="cu-btn block line-purple lg bt" bindtap="sureTap" style="height:{{ windowHeight*0.05}}px;" disabled="{{canlog}}" >确认</button>

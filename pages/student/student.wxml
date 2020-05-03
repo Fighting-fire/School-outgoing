@@ -1,2 +1,36 @@
-<!--pages/student/student.wxml-->
-<text>pages/student/student.wxml</text>
+<!-- <view class="div">
+  <view  wx:for="{{ne}}" wx:for-index="key"  wx:for-item="value">
+    <view wx:if="{{value.isNow}}">
+      <view  wx:for="{{value.markers}}" wx:for-index="key"  wx:for-item="value">
+      {{key}} : {{value.markerlat}},{{value.markerlon}}
+      </view>
+    </view>
+  </view>
+</view> -->
+<!-->从studentlog获得的学生姓名<--><!--pages/me/me.wxml-->
+<view style="height:{{ windowHeight}}px;">
+<view id="top" class="bg-purple padding radius text-center shadow-blur">
+  <image src="{{AvatarUrl}}" mode="widthFix"></image>
+  <text id="username" > {{teacherName}}班{{sname}} </text>
+  <view id="alterinfo">
+    <text space="nbsp">{{dateChose}} {{Sttime}}\n</text>
+    
+  </view>
+</view>
+<view id="middle">
+  <view id="score">
+    用时:
+    <text>{{hours}}:{{minute}}:{{second}}</text>
+  </view>
+</view>
+<view id="btns" >
+  <view class="btnitem  cuIcon-location lg text-gray" bindtap="locationViewTap">
+   打点
+  </view>
+  <view class="btnitem cuIcon-countdownfill lg text-gray" bindtap="RunningBegin">
+    开始跑点
+  </view>
+</view>
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{marksItem}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;" wx:if="{{showMarkersStatus}}"></map>
+
+</view>
