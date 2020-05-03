@@ -1,50 +1,27 @@
 {
   "pages": [
-        "pages/teacher/teacher",
-        "pages/map/map",
-        
-        "pages/index/index",
+    "pages/index/index",
+    "pages/teacher/teacher",
     "pages/student/student",
-
-
- 
-    "pages/teacherlog/teacherlog",
-
+    "pages/logs/logs",
+    "pages/map/map",
     "pages/studentlog/studentlog",
-    
-    "pages/logs/logs"
+    "pages/teacherlog/teacherlog"
+
+
   ],
-  "tabBar": {
-    "custom": true,
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
-    "borderStyle": "black",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-"pagePath": "pages/teacher/teacher",
-"iconPath": "images/tabBar/广场1.png",
-"selectedIconPath": "images/tabBar/广场2.png",
-"text": "teacher"
-},
-{
-"pagePath": "pages/map/map",
-"iconPath": "images/tabBar/比赛1.png",
-"selectedIconPath": "images/tabBar/比赛2.png",
-"text": "map"
-}
-    ]
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "智行合一",
+    "navigationBarTextStyle": "black"
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+      "desc": "你的位置信息将用于活力中南确定活动地点"
     }
   },
- "window": {
-  "navigationStyle": "custom",
-      "navigationBarBackgroundColor": "#F6F6F6",
-      "navigationBarTextStyle": "white"
-},
 "style": "v2",
 "usingComponents": {
   "cu-custom": "/colorui/components/cu-custom"

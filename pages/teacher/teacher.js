@@ -7,13 +7,18 @@ let isListUnfold = true;
 let consoleUtil = require('../../utils/util.js');
 // 存储打点信息
 let markerlist = [];
+let mapslist = [];
 let marker = {};
 let markerid = 0;
 let mapid = 0;
+let id = 100;
+let plan1 = [];
+let plan2 = [];
 
 // 获取数据库引用
 const db = wx.cloud.database();
 const maps = db.collection('maps');
+const student= db.collection('student')
 
 
 Page({
@@ -22,22 +27,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-    upclass:"cuIcon-unfold",
-    downclass:"cuIcon-fold",
+    isAboutShown: false,
+    show1: false,
+    upclass: "cuIcon-unfold",
+    downclass: "cuIcon-fold",
     uptext: "显示隐藏按钮",
     downtext: "隐藏下列按钮",
-    button:true,
+    button: true,
     imgUrl: '../../images/warm-bg.jpg',
     temp: 15,
-    level:"选择地图",
+    level: "选择地图",
     listItem: ["难", "中", "易"],
     show: false,
     // 总界面显示
     showNewStatus: true,
     // 新建界面动画显示
     showModalOneStatus: false,
-    // 管理界面动画显示
+    // 管理界面动画显示F
     showModalTwoStatus: false,
+    // 气泡界面动画显示
+    showModalTriStatus: false,
     // 地图界面显示
     showMapStatus: false,
     //地图、提示、列表高度
@@ -60,21 +69,42 @@ Page({
     //将地图中选中的marker对应的地点在list中显现
     toView: '',
     arrsrc: '../../img/arrDown.png',
-     mainActiveIndex: 0,
+    mainActiveIndex: 0,
     activeId: null,
-    toView: ''
+    //成绩文件地址
+    fileUrl:"",
+    isAboutShown: false,
+    plan0: [],
+    plan1: [],
+    plan2: []
+  },
+  onClose1() {
+    this.setData({ show1: false });
   },
   showPopup() {
     this.setData({ show: true });
-    wx.navigateTo({
-      url: "../pages/map/map"
-    })
+    // wx.navigateTo({
+    //   url: "../map/map"
+    // })
   },
-  selectlevel: function (e) {
-    let i = e.currentTarget.dataset.index
-    this.setData({
-      level: this.data.listItem[i]
-    })
+
+  // selectlevel: function (e) {
+  //   let i = e.currentTarget.dataset.index
+  //   this.setData({
+  //     level: this.data.listItem[i]
+  //   })
+  // },
+  howPopup() {
+    this.setData({ show: true });
+    // wx.navigateTo({
+    //   url: "../map/map"
+    // })
+  },
+  showPopup1() {
+    this.setData({ show1: true });
+    // wx.navigateTo({
+    //   url: "../map/map"
+    // })
   },
   onClose() {
     this.setData({ show: false });
@@ -95,33 +125,116 @@ Page({
 
     this.setData({ activeId });
   },
+
   powerDrawerOne: function (evt) {
     //获取该对象的statu
+    let i = evt.currentTarget.dataset.index
+    this.setData({
+      level: this.data.listItem[i]
+    })
     let currentStatu = evt.currentTarget.dataset.statu;
     mapid = evt.currentTarget.dataset.id;
     // console.log(currentStatu);
     // console.log(mapid);
     this.utilOne(currentStatu)
   },
+
   onChange(event) {
     const { picker, value, index } = event.detail;
     picker.setColumnValues(1, citys[value[0]]);
   },
+
   powerDrawerTwo: function (evt) {
     //获取该对象的statu
     let currentStatu = evt.currentTarget.dataset.statu;
     this.utilTwo(currentStatu)
   },
 
+  powerDrawerTri: function (evt) {
+    let currentStatu = evt.currentTarget.dataset.statu;
+    id = evt.markerId;
+    // console.log(id)
+    this.utilTri(currentStatu)
+  },
+
+  utilTri: function (currentStatu) {
+    /* 动画部分 */
+    // 第1步：创建动画实例   
+    let animation = wx.createAnimation({
+      duration: 200,  //动画时长  
+      timingFunction: "linear", //线性  
+      delay: 0  //0则不延迟  
+    });
+
+    // 第2步：这个动画实例赋给当前的动画实例  
+    this.animation = animation;
+
+    // 第3步：执行第一组动画  
+    animation.opacity(0).rotateX(-100).step();
+
+    // 第4步：导出动画对象赋给数据对象储存  
+    this.setData({
+      animationData: animation.export()
+    })
+
+    // 第5步：设置定时器到指定时候后，执行第二组动画  
+    setTimeout(function () {
+      // 执行第二组动画  
+      animation.opacity(1).rotateX(0).step();
+      // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象  
+      this.setData({
+        animationData: animation
+      })
+
+      //关闭  
+      if (currentStatu == "close") {
+        this.setData(
+          {
+            showModalTriStatus: false
+          }
+        );
+      }
+    }.bind(this), 200)
+
+    // 显示  
+    if (currentStatu == "open") {
+      this.setData(
+        {
+          showModalTriStatus: true
+        }
+      );
+    }
+  },
+
+
   /** 
      * 显示mapview
      */
-  toMap: function () {
-    this.setData({
-      showNewStatus: false,
-      showMapStatus:true,
-    })
+  toMap: function (evt) {
+    // console.log(this.data.mapsItem)
+    // console.log(this.data.mapname)
+    let exist = 0
+    for (let i = 0; i < this.data.mapsItem.length; i++) {
+      if (this.data.mapsItem[i].name == this.data.mapname) {
+        wx.showToast({
+          title: '该地图名已存在哦~',
+          icon:"none",
+        })
+        exist = 1
+      }
+    }
+    if(exist==0){
+      wx.clearStorage()
+      markerlist = []
+      this.setData({
+        showModalOneStatus: false,
+        showNewStatus: false,
+        showMapStatus: true,
+        marksItem:[],
+      })
+    }
   },
+
   onLoad: function (options) {
     var that = this
     // console.log(app.globalData)
@@ -347,24 +460,23 @@ Page({
   onShow: function () {
     consoleUtil.log('onShow--------------------->');
     this.getWindowHeight();
-    markerid = 1;
     let that = this;
     //获取maps集合
     maps.get({
- 
+
       success: function (res) {
         var temp = [];
         console.log(temp);
         let j = 0;
-        for (j = 0; j < res.data.length; j++){
+        for (j = 0; j < res.data.length; j++) {
           temp.push(res.data[j].name)
         }
-    
+
         console.log(temp)
         // res.data 是一个包含集合中有权限访问的所有记录的数据，不超过 20 条\
         that.setData({
-          mapsItem:res.data,
-          listItem:temp
+          mapsItem: res.data,
+          listItem: temp
         })
         // console.log(that.data.mapsItem)
       }
@@ -416,11 +528,11 @@ Page({
     }
     if (isListUnfold) {
       this.setData({
-        button:false,
+        button: false,
       })
     } else {
       this.setData({
-        button:true,
+        button: true,
         listHeight: windowHeight * 0.38
       })
     }
@@ -436,10 +548,10 @@ Page({
     }
   },
 
-/**
-   * 获得mapname
-   */
-  mapName: function(evt){
+  /**
+     * 获得mapname
+     */
+  mapName: function (evt) {
     let name = evt.detail.value;
     this.setData({
       mapname: name
@@ -447,9 +559,9 @@ Page({
     // console.log(this.data.mapname);
   },
 
-/**
-   * 添加markers
-   */
+  /**
+     * 添加markers
+     */
   addMakers: function () {
     markerid++;
     let that = this;
@@ -458,79 +570,141 @@ Page({
       success: function (res) {
         marker = {
           id: markerid,
-          markerlat: res.latitude,
-          markerlon: res.longitude,
+          latitude: res.latitude,
+          longitude: res.longitude,
           iconPath: '../../img/location.png',
           width: 27,
           height: 40,
+          isend:false,
           callout: {
             content: ''
           }
         }
         markerlist.push(marker)
+        // console.log(markerlist)
         that.setData({
           latitude: res.latitude,
           longitude: res.longitude,
           scale: 16,
           marksItem: markerlist,
         })
+        console.log(that.data.marksItem)
       },
-    })
-  },
-
- /** 
-     * 将地图信息提交至数据库
-     */
-  saveMakers:function(){
-    maps.add({
-      data:{
-        name:this.data.mapname,
-        markers: this.data.marksItem,
-        isNow:false,
-      },
-      success(res){
-        console.log("提交成功",res)
-      },
-      fail(res){
-        console.log("提交失败",res)
-      }
     })
   },
 
   /** 
-     * 显示newview
+      * 保存
+      */
+  saveMakers: function () {
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+    })
+  },
+
+  /** 
+     * 显示newview并将地图信息提交至数据库
      */
   outMakers: function () {
+    maps.add({
+      data: {
+        name: this.data.mapname,
+        markers: this.data.marksItem,
+        isNow: false,
+      },
+      success(res) {
+        console.log("提交成功", res)
+      },
+      fail(res) {
+        console.log("提交失败", res)
+      }
+    })
     this.setData({
       showNewStatus: true,
       showMapStatus: false,
-      showModalOneStatus:false
+      showModalOneStatus: false,
+      showModalTwoStatus:false,
     })
+    this.onShow()
   },
 
-  changeMap:function(evt){
-    // console.log(mapid);
+  changeMap: function (evt) {
+    console.log(mapid);
     wx.navigateTo({
       url: '../map/map?mapid=' + mapid
     })
+    console.log("success");
   },
 
-  nowMap:function(){
-    console.log(mapid);
-    maps.doc(mapid).update({
+  nowMap: function () {
+    
+    console.log(this.data.mapsItem[0]._id);
+    let i = 0
+    let id
+    let length = this.data.mapsItem.length
+    
+    for (i = 0; i < length; i++) {
+      id = this.data.mapsItem[i]._id
+      db.collection('maps').doc(id).update({
+        data: {
+          isNow: false
+        },
+        success(res) {
+          console.log("获取数据成功")
+        },
+        fail(res) {
+          console.log("获取数据失败")
+        }
+      })
+    }
+    
+    wx.cloud.callFunction({
+      name: "changemapstate",
       data: {
-        isNow: true,
+        id: mapid
       },
       success(res) {
-        console.log("更新成功", res)
+        console.log("发送数据成功", res)
       },
       fail(res) {
-        console.log("更新失败", res)
+        console.log("发送数据失败", res)
+      }
+    })
+    console.log(this.data.mapid)
+    db.collection('route').where({
+      id: mapid
+    }).get({
+      //console.log()
+      success: function (res) {
+        if(res.data.length==0){
+          wx: wx.showToast({
+            title: '请设置集合点'
+          })
+        }
+        else{
+          wx: wx.showToast({
+            title: '设置成功'
+          })
+          db.collection('maps').doc(mapid).update({
+            // data 传入需要局部更新的数据
+            data: {
+              isNow: true
+            }
+          })
+        }
+        
+        console.log(res)
+      },
+      fail: function (res) {
+       
+        console.log(res)
       }
     })
   },
 
-  deleteMap:function(){
+
+  deleteMap: function () {
     maps.doc(mapid).remove({
       success(res) {
         console.log("删除成功", res)
@@ -539,6 +713,136 @@ Page({
         console.log("删除失败", res)
       }
     })
-    
+    this.onShow()
   },
+
+  /** 
+      * 删除点
+      */
+  deleteMarkers: function (evt) {
+    console.log(markerlist)
+    for (let i = 0; i < markerlist.length; i++) {
+      if (markerlist[i].id == id) {
+        markerlist.splice(i, 1);
+      }
+    }
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+      showModalTriStatus: false,
+    })
+    console.log(this.data.marksItem)
+  },
+
+  /** 
+      * 设为集合点
+      */
+  endMarkers: function (evt) {
+    let that = this;
+    for (let i = 0; i < markerlist.length; i++) {
+      markerlist[i].isend = false;
+      if (markerlist[i].id == id) {
+        markerlist[i].isend = true;
+        let exchange = markerlist[i];
+        markerlist[i] = markerlist[markerlist.length - 1];
+        markerlist[markerlist.length - 1] = exchange;
+        //保证最后一个点为集合点（是不是可以把isend给去了呢？）
+      }
+    }
+    //生成路线规划
+    let point = markerlist.length;
+    for (let i = 0; i < markerlist.length - 1; i++) {
+      plan1[i] = markerlist[i + 1]
+    }
+    plan1[markerlist.length - 2] = markerlist[0]
+    plan1[markerlist.length - 1] = markerlist[markerlist.length - 1]
+    for (let i = 1; i < markerlist.length - 2; i++) {
+      plan2[i] = markerlist[i + 1]
+    }
+    plan2[0] = markerlist[0]
+    plan2[markerlist.length - 2] = markerlist[1]
+    plan2[markerlist.length - 1] = markerlist[markerlist.length - 1]
+    db.collection('route').add({
+      data: {
+        marker: plan1,
+        id: mapid,
+        name: "plan1"
+      }
+    })
+    db.collection('route').add({
+      data: {
+        marker: plan2,
+        id: mapid,
+        name: "plan2"
+      }
+    })
+    this.setData({
+      scale: 16,
+      marksItem: markerlist,
+      showModalTriStatus: false,
+    })
+    console.log(markerlist)
+    console.log('设置成功')
+  },
+
+  
+  //把数据保存到excel里，并把excel保存到云存储
+  savaExcel(userdata) {
+    let that = this
+    wx.cloud.callFunction({
+      name: "excel",
+      data: {
+        userdata: userdata
+      },
+      success(res) {
+        console.log("保存成功", res)
+        that.getFileUrl(res.result.fileID)
+      },
+      fail(res) {
+        console.log("保存失败", res)
+      }
+    })
+  },
+
+  //获取云存储文件下载地址，这个地址有效期一天
+  getFileUrl(fileID) {
+    let that = this;
+    wx.cloud.getTempFileURL({
+      fileList: [fileID],
+      success: res => {
+        console.log("文件下载链接", res.fileList[0].tempFileURL)
+        that.setData({
+          fileUrl: res.fileList[0].tempFileURL
+        })
+      },
+      fail: err => {
+        // handle error
+      }
+    })
+  },
+
+  saveExecel:function(){
+    let that = this
+    student.get({
+      success: function (res) {
+        console.log(res.data);
+        that.savaExcel(res.data);
+      }
+    })
+    wx.setClipboardData({
+      data: that.data.fileUrl,
+      success(res) {
+        wx.getClipboardData({
+          success(res) {
+            console.log("复制成功", res.data) // data
+          }
+        })
+      }
+    })
+    wx.showToast({
+      title: '文件下载地址已复制，请在浏览器中输入下载成绩单~',
+      icon: "none",
+    })
+  }
+
 })

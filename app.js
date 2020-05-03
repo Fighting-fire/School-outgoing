@@ -3,7 +3,7 @@ App({
   onLaunch: function () {
     //接云开发
     wx.cloud.init({
-      env:"feifeiniubi-cmo2o"
+      env:"outgoing-vftqo"
     })
 
 

@@ -1,1 +1,113 @@
-/* pages/student/student.wxss */
+/* pages/me/me.wxss */
+page{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+#top{
+  width: 100%;
+  height: auto;
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  -moz-background-size:100% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#top image{
+  width: 25%;
+  border-radius: 50%;
+  border: 2px solid white;
+  margin: 80rpx 0 40rpx 0;
+}
+#username{
+  font-size: 45rpx;
+  color:white;
+}
+#alterinfo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: auto;
+  height: auto;
+  margin: 20rpx 0 60rpx 0;
+}
+#alterinfo text{
+  font-size: 20rpx;
+  width: auto;
+  white-space: nowrap;
+  line-height: 40rpx;
+  height: 40rpx;
+  font-family: SHSCNL;
+}
+#alterinfo image{
+  width: 20rpx;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+}
+#middle{
+  width: 100%;
+  height: 300rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+#score{
+  width: 45%;
+  font-size:75rpx;
+  color: #585858;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+#score text{
+  font-size: 120rpx;
+  white-space: nowrap;
+  font-weight: bolder;
+  background-image: linear-gradient(to right, #9bb5eb,#f2fbb6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(155,180,235,0.9);
+  text-shadow: 0 5px rgba(140,159,199,0.29);
+  font-family: Tahoma;
+}
+#gang{
+  width: 1px;
+  height: 60%;
+  background-color: #9bb7ea;
+}
+#log{
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logitem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 85%;
+  font-size: 24rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+#btns{
+  width: 100%;
+}
+.btnitem{
+  color: #343434;
+  font-size: 28rpx;
+  line-height: 100rpx;
+  width: 100%;
+  height: 100rpx;
+  margin: 10rpx 0;
+  background-image: linear-gradient(to right, rgba(245, 251, 254),#ffffff);
+  padding-left: 60rpx;
+}

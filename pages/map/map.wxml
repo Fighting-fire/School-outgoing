@@ -1,19 +1,56 @@
-<view class='map-wrapper' style='height:{{mapHeight}}px'>
-    <map id='myMap' class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{marksItem}}" enable-rotate='true' enable-3D='true' show-location='true' bindmarkertap='setUp' bindtap='outFocus'>
+<view id="app"style=" height: {{ windowHeight }}px">
+<view class='map-wrapper' style='height:{{ windowHeight}}px;'>
+
+
+    <!-- wx:if -->
+
+    <map id='myMap' class='map' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{marksItem}}" enable-rotate='true' enable-3D='true' show-location='true' bindmarkertap='powerDrawer' bindtap='outFocus' data-statu="open">
     </map>
 </view>
-<view class='hint' style='height:{{hintHeight}}px' bindtap='changeListStatus'>
+ <view class='hhint'  bindtap="showPopup1" style='height:{{hintHeight}}px'>
   <!-- wx:if -->
-  <view wx:if='{{!isAboutShown}}'>
-    <image src="{{arrsrc}}" class="arr"></image>
+    展开操作栏
   </view>
-</view>
-<!-- <view class='hint' wx:if='{{!isAboutShown}}' style='height:{{operateHeight}}px' bindtap='changeListStatus'> -->
-<view>
-  <view>
-    <button class="marker" bindtap="addMakers">添加</button>
-    <button class="marker" bindtap="saveMakers">保存</button>
-    <button class="marker" bindtap="outMakers">退出</button>
-    <view>{{marksItem.name}}</view>
+   <van-popup
+          show="{{ show1 }}"
+          position="bottom"
+          custom-style="height: 45%;"
+          bind:close="onClose1"
+          round
+          >
+           <van-cell class='hint'>
+           <view class='view-hint'>操作</view>
+           </van-cell>
+           <scroll-view style="max-height: {{ windowHeight * 0.4 }}px" scroll-y="true"        scroll-with-animation scroll-into-view="{{ toView }}">
+  <van-cell class='hint'>
+      <view class="cu-btn block line-purple lg" bindtap="addMarkers">添加</view>
+         </van-cell>
+          <van-cell class='hint'>
+      <view class="cu-btn block line-purple lg" bindtap="saveMarkers">保存</view>
+         </van-cell>
+          <van-cell class='hint'>
+      <view class="cu-btn block line-purple lg" bindtap="outMarkers">退出</view>
+         </van-cell>
+            <van-cell  custom-class="{{ item.id == toView ? 'bgdc' : '' }}" size="large"  clickable="true" data-index="{{ index }}" bindtap='selectlevel'>
+          <view slot="title" class="cell-title">
+          </view>
+            </van-cell>
+      
+    </scroll-view>
+          </van-popup>
+  <!--弹出管理页面-->  
+  <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>  
+  <!--content-->  
+  <!--使用animation属性指定需要执行的动画-->  
+  <view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">  
+    
+    <!--drawer content-->  
+    <view class="drawer_title">CSU校园户外</view>  
+    <view class="drawer_content">  
+      <view class="btn_ok" bindtap="deleteMarkers" data-statu="close">删除标记点</view>
+      <view class="btn_ok" bindtap="endMarkers" data-statu="close">设为集合点</view>  
+    </view> 
+   
   </view>
-</view>
+     
+  </view>

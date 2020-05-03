@@ -1,12 +1,411 @@
 /* pages/studentlog/studentlog.wxss */
-#namecontainer{
+
+/* pages/release/release.wxss */
+.choose{
+  text-align: center;
+}
+page{
+  font-family: SHSCNL;
+  height: 100%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+.sportele{
+  font-size: 23rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 4%;
+  margin-bottom: 4%;
+  border:solid 1rpx;
+  border-color: grey;
+  border-radius: 6rpx;
+}
+.sportslist{
+  display: flex;
+  display: -webkit-flex;
+  justify-content: space-start;/*防止出现空格*/
   flex-direction: row;
+  flex-wrap: wrap;
+}
+.SelectTitle{
+  margin-left: 15%;
+  margin-top: 10%;
+  margin-bottom: 8%;
+}
+.SetTitle{
+  margin-left: -12%;
+  margin-top: 10%;
+  margin-bottom: 8%;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
 }
+.setele{
+  font-size: 16rpx;
+  color:grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:solid 1rpx;
+  border-color: grey;
+  border-radius: 6rpx;
+}
+.checkbox{
+  margin-top: 3%;
+  font-size: 16rpx;
+  display: flex;
+}
+.checkbox_item2{
+  margin-left: 15%;
+}
+.InputField{
+  margin-top:5%;
+}
+.ActionName{
+  font-size: 10px;
+  margin-top:5%;
+}
 
-#nametitle{
+.InputView{
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-bottom: 1px solid#E0E3DA;
+  margin-bottom: 5%;
+}
+.levelsum{
+  margin-left: 60%;
+  margin-top: 8%;
+  margin-bottom:8%;
+  font-size: 26rpx;
+  color:black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:solid 1rpx;
+  border-color: grey;
+  border-radius: 46rpx;
+  background-color: rgb(226, 233, 249)
+}
+.leveltag{
+  margin-top: 8%;
+  margin-bottom:8%;
+  font-size: 16rpx;
+  color:black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border:solid 1rpx;
+  border-color: grey;
+  border-radius: 6rpx;
+  background-color: rgb(226, 233, 249)
+}
+.fayd_xian{
+  margin-top: -8%;
+}
+.fqyd_text{
+  margin-bottom: 2%;
+  font-size: 30rpx;
+  width: 100%;
+  text-align: center;
+}
+.fqyd_text_view{
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  display: flex;
+}
+.faqiyundong{
+  margin-top:10%;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.ColorBackground{
+  background-size:100% 100%;
+  display: flex;
+  height: 150px;
+  display: -webkit-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-image:url("https://6665-feifeiniubi-cmo2o-1301607192.tcb.qcloud.la/background.jpg?sign=b121293cda1ad34975eb70713dfc8e10&t=1586101722");
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.hint {
+  z-index: 999;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  padding: 28rpx 0 28rpx 0;
+  color: #1c659c;
+  border-bottom: 1px solid #beb6b6;
+}
+.view-hint {
+  z-index: 999;
+  width: 100%;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  color: #1c659c;
 
+}
+/* pages/home/home.wxss */
+
+.bg-img {
+  position: fixed;
+  width: 200px;
+  opacity: 0.8;
+  right: 32px;
+}
+
+.head {
+  display: flex;
+  padding-left: 32rpx;
+  align-items: center;
+}
+
+.head-item {
+  color: #fff;
+  font-size: 37rpx;
+}
+
+.menu {
+  /* 如果要实现滑动则要添加下面这两行代码 */
+  overflow: hidden;
+  white-space: nowrap;
+  height: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+/* 隐藏滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.menu-item {
+  height: 28px;
+  margin: 2px 0;
+  /* 如果要实现滑动则要添加下面这行代码 */
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  font-size: 30rpx;
+  color: #fff;
+  padding: 0 30rpx 0 30rpx;
+}
+
+.menu-item-select {
+  background-image: url('https://7265-release-rr1dn-1301509296.tcb.qcloud.la/circle.jpg?sign=7223a8ea913b36b8e62e0b81e89ee766&t=1583757187');
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+}
+
+.map-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+.hint {
+  z-index: 999;
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  padding: 28rpx 0 28rpx 0;
+  color: #1c659c;
+  border-bottom: 1px solid #beb6b6;
+}
+
+.bgdc {
+  background-color: rgb(197, 225, 241) !important;
+}
+
+.navigate-text {
+  padding: 10rpx;
+  color: #1c659c;
+}
+
+.navigate-btn {
+  padding: 10rpx;
+  width: 49rpx;
+  height: 42rpx;
+  opacity: 0.9;
+}
+
+.btn {
+  position: absolute;
+  top: 77%;
+  left: 83%;
+}
+
+.icons {
+  position: absolute;
+  top: 50rpx;
+  right: 50rpx;
+  color: #1c659c;
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx 10rpx;
+  border-radius: 50rpx;
+  background: rgba(0, 0, 0, 0.3);
+}
+.cell-title {
+  color: #1c659c !important;
+  margin-left: 2rpx !important;
+  display: flex!important;
+  align-items: center!important;
+}
+
+
+.view-hint {
+  z-index: 999;
+  width: 100%;
+  background-color: white;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  font-size: 30rpx;
+  text-align: center !important;
+  color: #1c659c;
+
+}
+/* pages/orderTime/index.wxss */
+scroll-view{
+  height: 128rpx;
+ 
+  width: 100%;
+}
+scroll-view .list{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+    width: 1302rpx; 
+}
+scroll-view .listItem{
+  text-align: center;
+  width: 186rpx;
+  height: 128rpx;
+  background-color: #f1f2f6;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+  /* float: left; */
+  display: inline-block;
+}
+scroll-view .listItem text{
+  display: block;
+}
+scroll-view .listItem .name{
+  font-size: 21rpx;
+}
+scroll-view .listItem .date{
+  font-size: 21rpx;
+}
+scroll-view .current{
+  background-color: #76aef8;
+
+}
+scroll-view .current text{
+  color: #fff;
+}
+.time{
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0 auto;
+  margin-top: 30rpx;
+}
+.time .listItem{
+  width: 25%;
+  height: 135rpx;
+  text-align: center;
+  box-sizing: border-box;
+  background-color: #fff;
+  padding-top: 35rpx;
+  border: 1px solid #b9c1c8;
+}
+.time .listItem text{
+  display: block;
+  font-size: 21rpx;
+}
+.time .current{
+  border: 1px solid #76aef8;
+}
+.time .current text{
+  color: #76aef8;
+}
+.operate button{
+  width:300rpx;
+  height: 88rpx;
+  background-color: #fff;
+}
+
+.bt{
+  margin-bottom: 5%;
+  margin-top: 5%;
+  font-size: 25rpx!important;
+}
+.operate .del{
+  
+   color: #e54449; 
+}
+.operate button::after{
+  border: 2px solid #e54449;
+}
+.operate{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+.operate button:nth-child(2):after{
+  border: 2px solid #e54449;
+}
+.operate .save{
+  color: #fff;
+  background-color: #e54449; 
+  
+}
+.operate{
+  width: 100%;
+  padding: 30rpx 0;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
 }
 
 #teachercontainer{
